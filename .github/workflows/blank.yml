@@ -7,69 +7,54 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: centos:7
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Switch yum to vault
-        run: |
-          sed -i 's|^mirrorlist=|#mirrorlist=|g' /etc/yum.repos.d/CentOS-*.repo
-          sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*.repo
-          yum clean all
-          yum makecache
-
-      - name: Install system tools
-        run: |
-          yum install -y wget bzip2 tar which git ca-certificates
-          update-ca-trust
-
-      - name: Install Miniforge
-        run: |
-          wget -O /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
-          bash /tmp/miniforge.sh -b -p /opt/conda
-          /opt/conda/bin/conda config --set always_yes yes --set changeps1 no
-          /opt/conda/bin/conda update -n base -c conda-forge conda
-
-      - name: Create mokit environment and install packages
+      - name: Build packed env in CentOS 7 container
         shell: bash
         run: |
-          source /opt/conda/etc/profile.d/conda.sh
+          docker run --rm \
+            -v "$GITHUB_WORKSPACE:/workspace" \
+            -w /workspace \
+            centos:7 \
+            bash -lc '
+              set -euo pipefail
 
-          conda create -y -n mokit-py311 python=3.11 mokit -c mokit -c conda-forge
-          conda activate mokit-py311
+              sed -i "s|^mirrorlist=|#mirrorlist=|g" /etc/yum.repos.d/CentOS-*.repo
+              sed -i "s|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g" /etc/yum.repos.d/CentOS-*.repo
+              yum clean all
+              yum makecache
 
-          conda install -y mokit pyscf conda-pack -c mokit -c conda-forge
-          pip install block2
-          pip install git+https://github.com/pyscf/dmrgscf
+              yum install -y wget bzip2 tar which git ca-certificates
+              update-ca-trust
 
-          PYSCFHOME=$(python - <<'PY'
-          import os
-          import pyscf
-          print(os.path.dirname(os.path.dirname(pyscf.__file__)))
-          PY
-          )
+              wget -O /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+              bash /tmp/miniforge.sh -b -p /opt/conda
 
-          wget -O /tmp/settings.py.example https://raw.githubusercontent.com/pyscf/dmrgscf/master/pyscf/dmrgscf/settings.py.example
-          mv /tmp/settings.py.example "${PYSCFHOME}/pyscf/dmrgscf/settings.py"
+              source /opt/conda/etc/profile.d/conda.sh
+              conda config --set always_yes yes --set changeps1 no
+              conda update -n base -c conda-forge conda
 
-      - name: Pack mokit environment
-        shell: bash
-        run: |
-          source /opt/conda/etc/profile.d/conda.sh
-          conda activate mokit-py311
-          conda pack -n mokit-py311 -o "$GITHUB_WORKSPACE/mokit-py311.tar.gz"
-          ls -lh "$GITHUB_WORKSPACE/mokit-py311.tar.gz"
+              conda create -y -n mokit-py311 python=3.11 mokit -c mokit -c conda-forge
+              conda activate mokit-py311
 
-      - name: Check glibc and Python
-        shell: bash
-        run: |
-          source /opt/conda/etc/profile.d/conda.sh
-          conda activate mokit-py311
-          ldd --version
-          python -V
-          python -c "import pyscf; import pyscf.dmrgscf; print('pyscf ok')"
+              conda install -y mokit pyscf conda-pack -c mokit -c conda-forge
+              pip install block2
+              pip install git+https://github.com/pyscf/dmrgscf
+
+              PYSCFHOME=$(python -c "import os, pyscf; print(os.path.dirname(os.path.dirname(pyscf.__file__)))")
+
+              wget -O /tmp/settings.py.example https://raw.githubusercontent.com/pyscf/dmrgscf/master/pyscf/dmrgscf/settings.py.example
+              mv /tmp/settings.py.example "${PYSCFHOME}/pyscf/dmrgscf/settings.py"
+
+              ldd --version
+              python -V
+              python -c "import pyscf; import pyscf.dmrgscf; print(\"pyscf ok\")"
+
+              conda pack -n mokit-py311 -o /workspace/mokit-py311.tar.gz
+              ls -lh /workspace/mokit-py311.tar.gz
+            '
 
       - name: Upload packed environment
         uses: actions/upload-artifact@v4
