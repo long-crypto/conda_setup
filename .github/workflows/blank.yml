@@ -15,6 +15,7 @@ jobs:
         shell: bash
         run: |
           docker run --rm \
+            --user "$(id -u):$(id -g)" \
             -v "$GITHUB_WORKSPACE:/workspace" \
             -w /workspace \
             centos:7 \
