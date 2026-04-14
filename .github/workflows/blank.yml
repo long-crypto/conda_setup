@@ -15,7 +15,6 @@ jobs:
         shell: bash
         run: |
           docker run --rm \
-            --user "$(id -u):$(id -g)" \
             -v "$GITHUB_WORKSPACE:/workspace" \
             -w /workspace \
             centos:7 \
@@ -54,6 +53,7 @@ jobs:
               python -c "import pyscf; import pyscf.dmrgscf; print(\"pyscf ok\")"
 
               conda-pack -n mokit-py311 -o /workspace/mokit-py311.tar.gz
+              chmod 644 /workspace/mokit-py311.tar.gz
               ls -lh /workspace/mokit-py311.tar.gz
             '
 
