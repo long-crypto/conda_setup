@@ -52,7 +52,7 @@ jobs:
               python -V
               python -c "import pyscf; import pyscf.dmrgscf; print(\"pyscf ok\")"
 
-              conda pack -n mokit-py311 -o /workspace/mokit-py311.tar.gz
+              conda-pack -n mokit-py311 -o /workspace/mokit-py311.tar.gz
               ls -lh /workspace/mokit-py311.tar.gz
             '
 
