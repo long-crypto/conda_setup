@@ -26,7 +26,7 @@ jobs:
               yum clean all
               yum makecache
 
-              yum install -y wget bzip2 tar which git ca-certificates
+              yum install -y wget bzip2 tar which git ca-certificates gcc gcc-c++ make
               update-ca-trust
 
               wget -O /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
