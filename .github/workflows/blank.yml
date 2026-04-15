@@ -39,14 +39,15 @@ jobs:
               conda create -y -n mokit-py311 python=3.11 mokit -c mokit -c conda-forge
               conda activate mokit-py311
 
-              conda install -y mokit pyscf conda-pack -c mokit -c conda-forge
-              pip install block2
+              conda install -y mokit pyscf mpi4py openmpi conda-pack -c mokit -c conda-forge
+              pip install block2-mpi
               pip install git+https://github.com/pyscf/dmrgscf
 
               PYSCFHOME=$(python -c "import os, pyscf; print(os.path.dirname(os.path.dirname(pyscf.__file__)))")
 
               wget -O /tmp/settings.py.example https://raw.githubusercontent.com/pyscf/dmrgscf/master/pyscf/dmrgscf/settings.py.example
               mv /tmp/settings.py.example "${PYSCFHOME}/pyscf/dmrgscf/settings.py"
+              chmod +x ${PYSCFHOME}/pyscf/dmrgscf/nevpt_mpi.py
 
               ldd --version
               python -V
