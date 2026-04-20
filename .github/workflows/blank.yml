@@ -39,7 +39,7 @@ jobs:
               conda create -y -n mokit-py311 python=3.11 mokit -c mokit -c conda-forge
               conda activate mokit-py311
 
-              conda install -y mokit pyscf mpi4py openmpi conda-pack -c mokit -c conda-forge
+              conda install -y mokit pyscf mpi4py cclib openmpi conda-pack -c mokit -c conda-forge
               pip install block2-mpi
               pip install git+https://github.com/pyscf/dmrgscf
 
