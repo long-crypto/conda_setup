@@ -31,26 +31,3 @@ run_install() {
 	rim-build -s steam.RunImage
 }
 export -f run_install
-
-##########################
-
-# enable OverlayFS mode, disable Nvidia driver check and run install steps
-RIM_OVERFS_MODE=1 RIM_NO_NVIDIA_CHECK=1 ./runimage bash -c run_install
-./steam.RunImage --runtime-extract
-rm -f ./steam.RunImage
-
-mv ./RunDir ./AppDir
-mv ./AppDir/Run ./AppDir/AppRun
-
-# MAKE APPIMAGE WITH URUNTIME
-echo "Generating AppImage..."
-export VERSION="$(cat ~/version)"
-export OUTNAME=Steam-"$VERSION"-anylinux-"$ARCH".AppImage
-wget --retry-connrefused --tries=30 "$URUNTIME" -O ./uruntime2appimage
-chmod +x ./uruntime2appimage
-
-# needs to be added here because it wont work in the config file
-export ADD_PERMA_ENV_VARS='RIM_ALLOW_ROOT=1'
-./uruntime2appimage
-
-echo "All Done!"
