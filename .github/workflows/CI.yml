@@ -19,8 +19,7 @@ jobs:
         sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
         chmod +x ./linux-appimage.sh && ./linux-appimage.sh
         mkdir -p ./dist
-        mv *.AppImage* dist/
-        mv *.AppBundle* dist/
+        mv *.Image* dist/
     
     - name: Upload artifact
       uses: actions/upload-artifact@v7.0.1
