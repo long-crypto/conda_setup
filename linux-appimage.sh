@@ -53,17 +53,4 @@ chmod +x ./uruntime2appimage
 export ADD_PERMA_ENV_VARS='RIM_ALLOW_ROOT=1'
 ./uruntime2appimage
 
-# make squashfs appbundle
-UPINFO="gh-releases-zsync|$(echo "$GITHUB_REPOSITORY" | tr '/' '|')|latest|*$ARCH*.AppBundle.zsync"
-wget -qO ./pelf "https://github.com/xplshn/pelf/releases/latest/download/pelf_$ARCH"
-chmod +x ./pelf
-echo "Generating [sqfs]AppBundle...(Go runtime)"
-./pelf --add-appdir ./AppDir \
-	--compression "-comp zstd -Xcompression-level 22 -b 1M" \
-	--appbundle-id="com.valvesoftware.Steam-$(date +%d_%m_%Y)-ivanHC" \
-	--appimage-compat --disable-use-random-workdir \
-	--add-updinfo "$UPINFO" \
-	--output-to "Steam-${VERSION}-anylinux-${ARCH}.sqfs.AppBundle"
-zsyncmake ./*.AppBundle -u ./*.AppBundle
-
 echo "All Done!"
