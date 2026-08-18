@@ -18,7 +18,7 @@ run_install() {
 	set -e
 
 	INSTALL_PKGS=(
-		intel-oneapi-toolkit https://archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst python-h5py
+		intel-oneapi-toolkit archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst python-h5py
 	)
 
 	echo '== checking for updates'
