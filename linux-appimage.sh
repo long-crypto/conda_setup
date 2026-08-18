@@ -18,7 +18,7 @@ run_install() {
 	set -e
 
 	INSTALL_PKGS=(
-		curl python-h5py gcc yay
+		curl python-h5py gcc yay base-devel
 	)
 
 	echo '== checking for updates'
