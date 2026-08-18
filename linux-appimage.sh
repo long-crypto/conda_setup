@@ -18,7 +18,7 @@ run_install() {
 	set -e
 
 	INSTALL_PKGS=(
-		intel-oneapi-toolkit archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst python-h5py
+		intel-oneapi-toolkit python-h5py
 	)
 
 	echo '== checking for updates'
@@ -26,7 +26,8 @@ run_install() {
 
 	echo '== install packages'
 	pac --needed --noconfirm -S "${INSTALL_PKGS[@]}"
-
+    pac -U archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst
+	
 	echo '== Build new DwarFS runimage with zstd 22 lvl and 24 block size'
 	rim-build -s runimage-test
 }
