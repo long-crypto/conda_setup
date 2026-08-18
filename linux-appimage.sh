@@ -28,7 +28,7 @@ run_install() {
 	pac --needed --noconfirm -S "${INSTALL_PKGS[@]}"
 
 	echo '== Build new DwarFS runimage with zstd 22 lvl and 24 block size'
-	rim-build -s steam.RunImage
+	rim-build -s linux.RunImage
 }
 export -f run_install
 # enable OverlayFS mode, disable Nvidia driver check and run install steps
