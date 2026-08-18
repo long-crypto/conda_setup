@@ -18,7 +18,7 @@ run_install() {
 	set -e
 
 	INSTALL_PKGS=(
-		curl python-h5py gcc
+		curl python-h5py gcc intel-oneapi-toolkit sudo
 	)
 
 	echo '== checking for updates'
@@ -26,8 +26,8 @@ run_install() {
 
 	echo '== install packages'
 	pac --needed --noconfirm -S "${INSTALL_PKGS[@]}"
-	curl -o intel-oneapi-mkl-2025.3.1_8-1-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/i/intel-oneapi-mkl/intel-oneapi-mkl-2025.3.1_8-1-x86_64.pkg.tar.zst
-	pac --needed --noconfirm -U intel-oneapi-mkl-2025.3.1_8-1-x86_64.pkg.tar.zst
+	curl -o intel-oneapi-base-toolkit-2025.3.1.36_offline.sh -L https://registrationcenter-download.intel.com/akdlm/IRC_NAS/6caa93ca-e10a-4cc5-b210-68f385feea9e/intel-oneapi-base-toolkit-2025.3.1.36_offline.sh
+	chmod +x intel-oneapi-base-toolkit-2025.3.1.36_offline.sh && sudo sh ./intel-oneapi-base-toolkit-2025.3.1.36_offline.sh -a --silent --cli --eula accept
 	curl -o hdf5-1.12.1-1-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	pac --needed --noconfirm -U hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	
