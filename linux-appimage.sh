@@ -26,8 +26,8 @@ run_install() {
 
 	echo '== install packages'
 	pac --needed --noconfirm -S "${INSTALL_PKGS[@]}"
-	curl -o intel-oneapi-mkl-2025.0.1-3-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/i/intel-oneapi-mkl/intel-oneapi-mkl-2025.0.1-3-x86_64.pkg.tar.zst
-	pac --needed --noconfirm -U intel-oneapi-mkl-2025.0.1-3-x86_64.pkg.tar.zst
+	curl -o intel-oneapi-mkl-2025.3.1_8-1-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/i/intel-oneapi-mkl/intel-oneapi-mkl-2025.3.1_8-1-x86_64.pkg.tar.zst
+	pac --needed --noconfirm -U intel-oneapi-mkl-2025.3.1_8-1-x86_64.pkg.tar.zst
 	curl -o hdf5-1.12.1-1-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	pac --needed --noconfirm -U hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	
