@@ -18,7 +18,7 @@ run_install() {
 	set -e
 
 	INSTALL_PKGS=(
-		curl python-h5py gcc
+		curl python-h5py gcc intel-oneapi-toolkit
 	)
 
 	echo '== checking for updates'
