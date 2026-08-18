@@ -25,9 +25,9 @@ run_install() {
 	rim-update
 
 	echo '== install packages'
-	curl -o intel-oneapi-base-toolkit-2025.3.1.36_offline.sh -L https://registrationcenter-download.intel.com/akdlm/IRC_NAS/6caa93ca-e10a-4cc5-b210-68f385feea9e/intel-oneapi-base-toolkit-2025.3.1.36_offline.sh
-	./intel-oneapi-base-toolkit-2025.3.1.36_offline.sh -a --silent --cli --eula accept
 	pac --needed --noconfirm -S "${INSTALL_PKGS[@]}"
+	curl -o intel-oneapi-base-toolkit-2025.3.1.36_offline.sh -L https://registrationcenter-download.intel.com/akdlm/IRC_NAS/6caa93ca-e10a-4cc5-b210-68f385feea9e/intel-oneapi-base-toolkit-2025.3.1.36_offline.sh
+	chmod +x ./intel-oneapi-base-toolkit-2025.3.1.36_offline.sh && ./intel-oneapi-base-toolkit-2025.3.1.36_offline.sh -a --silent --cli --eula accept
 	curl -o hdf5-1.12.1-1-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	pac --needed --noconfirm -U hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	
