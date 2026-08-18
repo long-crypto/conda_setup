@@ -27,7 +27,7 @@ run_install() {
 	echo '== install packages'
 	pac --needed --noconfirm -S "${INSTALL_PKGS[@]}"
 	curl -o hdf5-1.12.1-1-x86_64.pkg.tar.zst -L archive.archlinux.org/packages/h/hdf5/hdf5-1.12.1-1-x86_64.pkg.tar.zst
-    pac --needed --noconfirm -U hdf5-1.12.1-1-x86_64.pkg.tar.zst
+	pac --needed --noconfirm -U hdf5-1.12.1-1-x86_64.pkg.tar.zst
 	
 	echo '== Build new DwarFS runimage with zstd 22 lvl and 24 block size'
 	rim-build -s runimage-test
