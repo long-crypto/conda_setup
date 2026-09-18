@@ -39,7 +39,7 @@ jobs:
               conda activate mokit-py311
 
               conda install -y mokit pyscf pyscf-dispersion mpi4py cclib openmpi conda-pack -c mokit -c conda-forge
-              pip install block2-mpi
+              pip install block2-mpi pyscf-forge
               pip install git+https://github.com/pyscf/dmrgscf
 
               PYSCFHOME=$(python -c "import os, pyscf; print(os.path.dirname(os.path.dirname(pyscf.__file__)))")
