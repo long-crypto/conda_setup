@@ -25,8 +25,10 @@ jobs:
               yum clean all
               yum makecache
 
-              yum install -y wget bzip2 tar which git ca-certificates gcc gcc-c++ make cmake
+              yum install -y wget bzip2 tar which git ca-certificates gcc gcc-c++ make
               update-ca-trust
+              curl -o cmake-4.4.3-linux-x86_64.sh -L https://github.com/Kitware/CMake/releases/download/v4.4.3/cmake-4.4.3-linux-x86_64.sh
+              ./cmake-4.4.3-linux-x86_64.sh --skip-license --prefix=/usr
 
               wget -O /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
               bash /tmp/miniforge.sh -b -p /opt/conda
