@@ -25,7 +25,7 @@ jobs:
               yum clean all
               yum makecache
 
-              yum install -y wget bzip2 tar which git ca-certificates gcc gcc-c++ make
+              yum install -y wget bzip2 tar which git ca-certificates gcc gcc-c++ make cmake
               update-ca-trust
 
               wget -O /tmp/miniforge.sh https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
@@ -41,6 +41,12 @@ jobs:
               conda install -y mokit pyscf pyscf-dispersion mpi4py cclib openmpi conda-pack -c mokit -c conda-forge
               pip install block2-mpi
               pip install git+https://github.com/pyscf/dmrgscf
+              cd miniforge3/envs/mokit-py311
+              git clone https://github.com/pyscf/pyscf-forge
+              cd pyscf-forge/pyscf/lib
+              mkdir build && cd build
+              cmake ..
+              make
 
               PYSCFHOME=$(python -c "import os, pyscf; print(os.path.dirname(os.path.dirname(pyscf.__file__)))")
 
