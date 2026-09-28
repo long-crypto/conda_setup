@@ -47,7 +47,7 @@ jobs:
               git clone https://github.com/pyscf/pyscf-forge
               cd pyscf-forge/pyscf/lib
               mkdir build && cd build
-              cmake ..
+              cmake -DBLA_VENDOR=Intel10_64lp_seq ..
               make
 
               PYSCFHOME=$(python -c "import os, pyscf; print(os.path.dirname(os.path.dirname(pyscf.__file__)))")
