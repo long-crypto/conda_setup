@@ -41,7 +41,7 @@ jobs:
               conda install -y mokit pyscf pyscf-dispersion mpi4py cclib openmpi conda-pack -c mokit -c conda-forge
               pip install block2-mpi
               pip install git+https://github.com/pyscf/dmrgscf
-              cd miniforge3/envs/mokit-py311
+              cd /opt/conda/envs/mokit-py311
               git clone https://github.com/pyscf/pyscf-forge
               cd pyscf-forge/pyscf/lib
               mkdir build && cd build
